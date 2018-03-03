@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package me;
+
+message MeConv {
+	required string name = 1;
+	repeated uint32 kernel_size = 2;
+	optional uint32 num_output = 3;
+	repeated Obj list = 4;
+}
+
+message Obj {
+	required string name = 1;
+	required uint32 id = 2;
+	enum Type {
+		NUM = 0;
+		STR = 1;
+		DATA = 2;
+	}
+	optional Type type = 3 [default = DATA];
+}
