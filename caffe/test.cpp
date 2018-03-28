@@ -163,6 +163,7 @@ Net<float> *model_caffe(Blob<float> *data_blob, std::string FLAGS_weights)
 	//blob_dump_data(data_blob);
 
 	memcpy(data, data_blob->cpu_data(), batch_size*channel*height*width*sizeof(float));
+	memset(label, 0, batch_size * sizeof(float));
 
 	caffe::MemoryDataLayer<float> *dataLayer = (caffe::MemoryDataLayer<float> *) (caffe_net->layer_by_name("bm_data").get());
 	dataLayer->Reset(data, label, batch_size);
