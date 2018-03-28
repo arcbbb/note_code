@@ -16,8 +16,6 @@ using caffe::Timer;
 using caffe::vector;
 using caffe::NetParameter;
 
-// g++ test.cpp -L /opt/caffe/build/install/lib  -I /opt/caffe/build/install/include/  -lcaffe -lboost_system -lprotobuf -lglog
-
 void dump_blob_shape(Blob<float> *blob)
 {
 	const vector<int> shape = blob->shape();
