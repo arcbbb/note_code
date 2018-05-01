@@ -192,6 +192,45 @@ void dump_lenet(Net<float> *net)
 	}
 }
 
+/*
+ * Net
+ *  net->has_layer(name)           bool
+ *  net->layer_by_name(name).get() Layer<float>*
+ *  net->layer_names()[layer_id]   vector<string>
+ *  net->layers()                  vector<shared_ptr<Layer<Dtype>>>
+
+ *  net->has_blob(name)            bool
+ *  net->blob_by_name(name).get()  Blob<float>*
+ *  net->blob_names()[blob_id]     vector<string>
+ *  net->blobs()                   vector<shared_ptr<Blob<Dtype>>>
+
+ *  net->top_vecs()                vector<vector<Blob<Dtype>*>>
+ *  net->top_ids()                 vector<int>
+ *  net->output_blob_indices()[output_id]
+ *
+ * Layer
+ *
+ * Blob
+ *  blob->shape
+ *  blob->data()->size()
+ *  blob->cpu_data()
+ *
+ * NetParameter
+ *  netparam->add_layer()
+ *
+ * LayerParameter
+ *  layer_param->top_size()
+ *  layer_param->top(id)
+ *  layer_param->set_name(name)
+ *  layer_param->set_type(type)
+ *  layer_param->add_top(blobname)
+ *  layer_param->add_top(blobname)
+ *  layer_param->add_include()
+ *
+ * InputParameter
+ *  layer->mutable_shape(shape_id)
+ */
+
 int main()
 {
         std::string dir = "lenet/";

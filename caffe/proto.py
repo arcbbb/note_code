@@ -5,7 +5,7 @@ from google.protobuf import text_format
 
 # caffemodel reader
 
-dir = '/home/user/bmtap2/caffe/cww/lenet/'
+dir = '/model/lenet/'
 deploy_proto = dir + 'deploy.prototxt'
 caffe_model = dir + 'lenet_iter_10000.caffemodel'
 #caffe_model = dir + 'bmnet_lenet_iter_10000_int8.10x100.caffemodel'
