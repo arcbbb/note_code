@@ -1,0 +1,47 @@
+" help
+" type :h pattern then press Ctrl-D to search related topics
+" Ctrl-] to follow the link, Ctrl-T to go back
+
+" variable
+":let foo = "bar"
+":echo foo
+
+" options as variables
+" :set tabstop=4
+" :let &tabstop= &tabstop + 2
+" :echo &tabstop
+
+" registers as variables
+" :echo @"
+" :echo @a
+
+" local variable to control windows individually
+" we do want line number in this window
+" :let &l:number = 1
+" we don't want line number in this window
+" :let &l:number = 0
+
+fu! SumFunc() range
+     let old = @a
+     normal gv"ay
+     let sel=@a
+     let @a=old
+
+     let res=0
+     try
+         exe 'let res = ' . join(split(sel,'\n'), '+')
+         call append(a:lastline, printf("Sum: %.02f", res))
+     catch
+         return -1
+     endtry
+     return 0
+endfu
+
+" map-overview
+" nore means no recursive.
+" map: define key mapping in normal, visual, select, operator-pending mode
+" nmap: define key mapping in normal mode
+" vmap: define key mapping in visual and select mode
+"vnoremap <F3> :call SumFunc()<CR>
+"vmap <leader>f :call SumFunc()<CR>
+
