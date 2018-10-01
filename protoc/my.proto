@@ -19,3 +19,7 @@ message Obj {
 	}
 	optional Type type = 3 [default = DATA];
 }
+
+message Data {
+	required bytes raw_data = 1;
+}

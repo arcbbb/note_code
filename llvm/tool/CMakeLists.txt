@@ -7,10 +7,29 @@ find_package(LLVM REQUIRED CONFIG)
 add_definitions(${LLVM_DEFINITIONS})
 include_directories(${LLVM_INCLUDE_DIRS})
 
-add_executable(cost main.cpp cost.cpp)
-
 # check llvm components: llvm-config --components
 llvm_map_components_to_libnames(llvm_libs support core irreader)
 
+#
+# target: dump-bc-inst
+#
+set (target-name dump-bc-inst)
+add_executable(${target-name} dump-bc-inst.cpp)
+
 # Link against LLVM libraries
-target_link_libraries(cost ${llvm_libs})
+target_link_libraries(${target-name} ${llvm_libs})
+
+#
+# target: Hello
+#
+add_library(hello MODULE Hello.cpp)
+SET(CMAKE_CXX_FLAGS "-Wall -fno-rtti")
+
+#
+# target: cl
+#
+set (target-name llvm-cl)
+add_executable(${target-name} cl.cpp)
+
+# Link against LLVM libraries
+target_link_libraries(${target-name} ${llvm_libs})

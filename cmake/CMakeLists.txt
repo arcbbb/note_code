@@ -1,4 +1,5 @@
 
+# Check target list: cmake.exe --build . --target help
 #
 # Target creation: add_library, add_executable, add_custom_target
 #     add_library(foo STATIC ...)
