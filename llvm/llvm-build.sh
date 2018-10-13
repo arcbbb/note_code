@@ -13,5 +13,5 @@ cmake \
       "-DLLVM_TARGETS_TO_BUILD=host;X86;ARM;AArch64" \
       "${SRCDIR}"
 ninja
-ninja install
+#ninja install
 )
