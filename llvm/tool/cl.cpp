@@ -3,6 +3,31 @@
 
 namespace cl = llvm::cl;
 
+//
+// Test SubCommand
+//
+cl::SubCommand target0sub("target0", "target0-specific options");
+cl::SubCommand target1sub("target1", "target1-specific options");
+
+cl::opt<int> target0Opt("target0-opt", cl::desc("enable target0 option"),
+    cl::sub(target0sub));
+
+cl::opt<int> target1Opt("target1-opt", cl::desc("enable target1 option"),
+    cl::sub(target1sub));
+
+//
+// Test Category
+//
+cl::OptionCategory FeatureA("FeatureA options");
+cl::opt<bool> FeatureAEnable("FeatureA-enable", cl::desc("enable FeatureA"),
+    cl::cat(FeatureA));
+cl::opt<int> FeatureAlevel("FeatureA-level", cl::desc("set FeatureA level"),
+    cl::cat(FeatureA));
+
+//
+// Test Option
+//
+
 cl::opt<bool> OptEnable("opt",cl::desc("Specify enable opt"));
 
 cl::opt<int> MemSize("memsize",
