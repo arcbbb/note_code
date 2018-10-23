@@ -1,0 +1,43 @@
+digraph G {
+
+	subgraph cluster_tiled2 {
+		style=filled;
+		node [style=filled,color=white];
+		label = "Tiled 2";
+
+    a0_split -> a0_0;
+    a0_split -> a0_1;
+
+    a5_0 -> a5_join;
+    a5_1 -> a5_join;
+
+    a0_0 -> a1_0_split;
+    a0_0 -> a3_0;
+    a1_0_split -> a1_0_0;
+    a1_0_split -> a1_0_1;
+    a1_0_split -> a1_0_2;
+
+    a1_0_0 -> a2_0_0 -> a2_0_join;
+    a1_0_1 -> a2_0_1 -> a2_0_join;
+    a1_0_2 -> a2_0_2 -> a2_0_join;
+
+    a3_0 -> a4_0 -> a5_0;
+    a2_0_join -> a4_0;
+
+    a0_1 -> a1_1_split;
+    a0_1 -> a3_1;
+    a1_1_split -> a1_1_0;
+    a1_1_split -> a1_1_1;
+    a1_1_split -> a1_1_2;
+
+    a1_1_0 -> a2_1_0 -> a2_1_join;
+    a1_1_1 -> a2_1_1 -> a2_1_join;
+    a1_1_2 -> a2_1_2 -> a2_1_join;
+
+    a3_1 -> a4_1 -> a5_1;
+    a2_1_join -> a4_1;
+
+	}
+}
+
+
