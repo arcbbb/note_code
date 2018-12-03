@@ -1,0 +1,10 @@
+digraph G {
+  subgraph cluster_tiled {
+    style=filled;
+    node [style=filled,color=white];
+    label = "Tiled";
+
+    begin -> Conv_0 -> MaxPool_0 -> Concat -> end;
+    begin -> Conv_1 -> MaxPool_1 -> Concat;
+  }
+}
