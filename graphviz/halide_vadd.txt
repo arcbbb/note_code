@@ -1,0 +1,91 @@
+digraph G {
+
+  node_for[
+    label = "{{For}|{<name>name: 'func_vadd.s0.i.i_inner'|<min>min|<extent>extent|<body>body}}"
+    shape = "record"
+  ];
+
+  node_store[
+    label = "{{<port>Store}|{name: 'func_add'|<index>index|<value>value}}"
+    shape = "record"
+  ];
+
+  node_add_var[
+    label = "{{<port>Add}|{<a>a|<b>b}}"
+    shape = "record"
+  ];
+
+  node_loadx[
+    label = "{{<port>Load}|{name: 'x'|<index>index}}"
+    shape = "record"
+  ];
+
+  node_loady[
+    label = "{{<port>Load}|{name: 'y'|<index>index}}"
+    shape = "record"
+  ];
+
+  node_var_i_inner[
+    label = "{{<port>Variable}|{name: 'func_vadd.s0.i.i_inner'}}"
+    shape = "record"
+  ];
+
+  node_add_imm_1[
+    label = "{{<port>Add}|{<a>a|<b>b}}"
+    shape = "record"
+  ];
+
+  node_add_imm_2[
+    label = "{{<port>Add}|{<a>a|<b>b}}"
+    shape = "record"
+  ];
+
+  node_add_imm_3[
+    label = "{{<port>Add}|{<a>a|<b>b}}"
+    shape = "record"
+  ];
+
+  node_imm0[
+    label = "{{<port>IntImm}|{value: 0}}"
+    shape = "record"
+  ];
+
+  node_imm16_0[
+    label = "{{<port>IntImm}|{value: 16}}"
+    shape = "record"
+  ];
+
+  node_imm32_1[
+    label = "{{<port>IntImm}|{value: 32}}"
+    shape = "record"
+  ];
+
+  node_imm32_2[
+    label = "{{<port>IntImm}|{value: 32}}"
+    shape = "record"
+  ];
+
+  node_imm32_3[
+    label = "{{<port>IntImm}|{value: 32}}"
+    shape = "record"
+  ];
+
+  node_for:min -> node_imm0;
+  node_for:extent -> node_imm16_0;
+  node_for:body -> node_store;
+
+  node_store:index -> node_add_imm_1;
+  node_store:value -> node_add_var;
+  node_add_var:a -> node_loadx;
+  node_add_var:b -> node_loady;
+  node_loadx:index -> node_add_imm_2;
+  node_loady:index -> node_add_imm_3;
+  node_add_imm_1:a -> node_var_i_inner;
+  node_add_imm_1:b -> node_imm32_1;
+  node_add_imm_2:a -> node_var_i_inner;
+  node_add_imm_2:b -> node_imm32_2;
+  node_add_imm_3:a -> node_var_i_inner;
+  node_add_imm_3:b -> node_imm32_3;
+}
+
+
