@@ -10,3 +10,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(conv conv.cpp)
 target_link_libraries(conv Halide)
+
+add_executable(vadd vadd.cpp)
+target_link_libraries(vadd Halide)
