@@ -1,0 +1,4 @@
+FROM ubuntu:16.04
+
+RUN apt-get update && apt install -y python-pip make cmake cmake-curses-gui gdb clang-6.0 libz-dev
+RUN pip install numpy decorator enum
