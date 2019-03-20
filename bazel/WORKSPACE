@@ -1,0 +1,13 @@
+# external dependencies: depend on targets from other projects
+# @coworkers_project//foo:bar
+#local_repository(
+#	name = "coworkers_project",
+#	path = "/path/to/coworkers-project",
+#)
+
+# loading a .bzl file has no visibly side-effect. it only defines values and functions
+#load("//:my.bzl", "my_local_repositoy")
+#my_local_repository(
+#	name = "another_project",
+#	path = "/path/to/coworkers-project",
+#)

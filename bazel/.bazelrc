@@ -1,0 +1,14 @@
+# Use our custom-configured c++ toolchain.
+startup --output_base ../.cache/bazel
+
+# for bazel build --config=riscv_build //src:hello
+
+build:riscv_build --crosstool_top=//toolchain:riscv_tool
+
+# Use --cpu as a differentiator.
+
+build:riscv_build --cpu=riscv --compiler=gcc
+
+# Specify a "sane" C++ toolchain for the host platform.
+
+build:riscv_build --host_crosstool_top=@bazel_tools//tools/cpp:toolchain
