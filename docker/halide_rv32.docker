@@ -1,0 +1,32 @@
+FROM ubuntu:16.04
+
+RUN sed -i 's/archive.ubuntu.com/tw.archive.ubuntu.com/g' \
+        /etc/apt/sources.list
+RUN apt-get update && apt install -y python-pip make cmake cmake-curses-gui gdb libz-dev wget unzip
+RUN pip install numpy decorator enum
+
+RUN mkdir /workspace
+WORKDIR /workspace
+
+RUN wget https://github.com/llvm-mirror/llvm/archive/release_80.zip \
+    && unzip release_80.zip && rm release_80.zip
+
+RUN wget https://github.com/llvm-mirror/clang/archive/release_80.zip \
+    && unzip release_80.zip && rm release_80.zip \
+    && mv clang-release_80 llvm-release_80/tools/clang
+
+RUN wget https://github.com/arcbbb/Halide/archive/riscv.zip \
+    && unzip riscv.zip && rm riscv.zip
+
+RUN mkdir /workspace/llvm-release_80/build
+WORKDIR /workspace/llvm-release_80/build
+RUN cmake -DLLVM_ENABLE_TERMINFO=OFF -DLLVM_TARGETS_TO_BUILD="X86;RISCV;" \
+        -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="RISCV;"  \
+        -DLLVM_ENABLE_ASSERTIONS=ON \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_CROSSCOMPILING=True .. \
+    && make -j$(nproc) install
+
+RUN mkdir /workspace/Halide-riscv/build
+WORKDIR /workspace/Halide-riscv/build
+RUN cmake .. && make -j$(nproc) Halide
