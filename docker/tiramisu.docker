@@ -1,0 +1,59 @@
+FROM ubuntu:16.04
+
+RUN sed -i 's/archive.ubuntu.com/tw.archive.ubuntu.com/g' \
+        /etc/apt/sources.list
+RUN apt-get update && apt install -y python-pip make cmake cmake-curses-gui gdb libz-dev wget unzip git autoconf
+RUN pip install numpy decorator enum
+
+RUN mkdir /workspace
+WORKDIR /workspace
+
+ENV TIRAMISU_DIR=/workspace/tiramisu
+
+RUN wget https://github.com/Tiramisu-Compiler/tiramisu/archive/master.zip \
+    && unzip master.zip && rm master.zip \
+    && mv tiramisu-master tiramisu
+
+RUN wget https://github.com/llvm-mirror/llvm/archive/release_50.zip \
+    && unzip release_50.zip && rm release_50.zip \
+    && rmdir tiramisu/3rdParty/llvm \
+    && mv llvm-release_50 tiramisu/3rdParty/llvm
+
+RUN wget https://github.com/llvm-mirror/clang/archive/release_50.zip \
+    && unzip release_50.zip && rm release_50.zip \
+    && rmdir tiramisu/3rdParty/clang \
+    && mv clang-release_50 tiramisu/3rdParty/clang
+
+RUN wget https://github.com/jrayzero/Halide/archive/tiramisu_64_bit.zip \
+    && unzip tiramisu_64_bit.zip && rm tiramisu_64_bit.zip \
+    && rmdir tiramisu/3rdParty/Halide \
+    && mv Halide-tiramisu_64_bit tiramisu/3rdParty/Halide
+
+# Get ISL installed
+WORKDIR $TIRAMISU_DIR/3rdParty/isl
+RUN mkdir build && touch aclocal.m4 Makefile.am Makefile.in \
+    && ./configure --prefix=$PWD/build/ --with-int=imath \
+    && make -j$(nproc) install
+
+# Get LLVM && Clang installed
+WORKDIR $TIRAMISU_DIR/3rdParty/llvm
+RUN mkdir prefix && \
+    mkdir build && cd build \
+    && cmake -DLLVM_ENABLE_TERMINFO=OFF -DLLVM_TARGETS_TO_BUILD='X86;' \
+    -DLLVM_ENABLE_ASSERTIONS=ON -DCMAKE_BUILD_TYPE=Release .. \
+    -DLLVM_EXTERNAL_CLANG_SOURCE_DIR=$TIRAMISU_DIR/3rdParty/clang \
+    -DCMAKE_INSTALL_PREFIX=$TIRAMISU_DIR/3rdParty/llvm/prefix \
+    && make -j$(nproc) install
+
+# Get Halide installed
+ENV LLVM_CONFIG=$TIRAMISU_DIR/3rdParty/llvm/prefix/bin/llvm-config
+ENV CLANG=$TIRAMISU_DIR/3rdParty/llvm/prefix/bin/clang
+WORKDIR $TIRAMISU_DIR/3rdParty/Halide
+RUN make CXXFLAGS=-DHALIDE_NO_JPEG -j$(nproc)
+
+# Build Tiramisu library
+WORKDIR $TIRAMISU_DIR
+RUN mkdir build && cd build \
+    && cmake .. && make -j$(nproc) tiramisu
+
+ENV HOME=$TIRAMISU_DIR

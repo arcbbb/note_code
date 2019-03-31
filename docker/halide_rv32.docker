@@ -15,6 +15,10 @@ RUN wget https://github.com/llvm-mirror/clang/archive/release_80.zip \
     && unzip release_80.zip && rm release_80.zip \
     && mv clang-release_80 llvm-release_80/tools/clang
 
+RUN wget https://github.com/llvm-mirror/polly/archive/release_80.zip \
+    && unzip release_80.zip && rm release_80.zip \
+    && mv polly-release_80 llvm-release_80/tools/polly
+
 RUN wget https://github.com/arcbbb/Halide/archive/riscv.zip \
     && unzip riscv.zip && rm riscv.zip
 
