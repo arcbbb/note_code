@@ -1,0 +1,3 @@
+1. install packages: isc-dhcp-server, tftpd-hpa
+2. modify configuration: /etc/dhcp/dhcpd.conf, /etc/default/tftpd-hpa
+
